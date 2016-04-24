@@ -14,6 +14,12 @@ use CodeDelivery\Validators\CategoryValidator;
  */
 class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepository
 {
+
+    public function lists($column, $key = null)
+    {
+        return $this->model->lists($column, $key);
+    }
+
     /**
      * Specify Model class name
      *

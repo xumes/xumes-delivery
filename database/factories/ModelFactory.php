@@ -44,3 +44,16 @@ $factory->define(CodeDelivery\Entities\Client::class, function (Faker\Generator 
     ];
 });
 
+$factory->define(CodeDelivery\Entities\Order::class, function (Faker\Generator $faker) {
+    return [
+        'client_id'=> rand(1, 10),
+        'total' => rand(50, 100),
+        'status' => 0,
+    ];
+});
+
+$factory->define(CodeDelivery\Entities\OrderItem::class, function (Faker\Generator $faker) {
+    return [
+
+    ];
+});

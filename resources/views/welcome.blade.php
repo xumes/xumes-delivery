@@ -38,7 +38,13 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Laravel 5</div>
+                <ul>
+                    <li><a href="{{ url('/') }}">Home</a></li>
+                    <li><a href="{{route("admin.categories.index") }}">Categories</a></li>
+                    <li><a href="{{route("admin.products.index") }}">Products</a></li>
+                    <li><a href="{{route("admin.clients.index") }}">Clients</a></li>
+                    <li><a href="{{route("admin.orders.index") }}">Orders</a></li>
+                </ul>
             </div>
         </div>
     </body>

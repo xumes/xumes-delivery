@@ -18,7 +18,7 @@ Route::get('/', function () {
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
-Route::get('auth/logout', 'Auth\AuthController@getLogout');
+Route::get('auth/logout', 'Auth\AuthController@logout');
 
 // Registration routes...
 Route::get('auth/register', 'Auth\AuthController@getRegister');
@@ -33,8 +33,9 @@ Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 
-Route::group(['prefix'=>'admin', 'middleware'=>'auth.checkrole'], function(){
-// Categories
+Route::group(['prefix'=>'admin', 'middleware'=>'auth.checkrole:admin'], function(){
+
+    // Categories
     Route::group(['prefix'=>'categories'], function(){
         Route::get('/', ['as'=>'admin.categories.index', 'uses'=>'CategoryController@index']);
         Route::get('create', ['as'=>'admin.categories.create', 'uses'=>'CategoryController@create']);
@@ -43,7 +44,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth.checkrole'], function(){
         Route::post('update/{id}', ['as'=>'admin.categories.update', 'uses'=>'CategoryController@update']);
     });
 
-// Products
+    // Products
     Route::group(['prefix'=>'products'], function(){
         Route::get('/', ['as'=>'admin.products.index', 'uses'=>'ProductController@index']);
         Route::get('create', ['as'=>'admin.products.create', 'uses'=>'ProductController@create']);
@@ -78,3 +79,11 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth.checkrole'], function(){
         Route::post('store', ['as'=> 'admin.cupoms.store', 'uses'=>'CupomController@store']);
     });
 });
+
+Route::group(['prefix'=> 'customer', 'middleware' => 'auth.checkrole:client'], function(){
+    Route::get('orders', ['as'=>'customer.order.index', 'uses'=>'CheckoutController@index']);
+    Route::get('orders/create', ['as'=>'customer.order.create', 'uses'=>'CheckoutController@create']);
+    Route::post('orders/store', ['as'=>'customer.order.store', 'uses'=>'CheckoutController@store']);
+});
+
+

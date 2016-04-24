@@ -40,11 +40,17 @@
             <div class="content">
                 <ul>
                     <li><a href="{{ url('/') }}">Home</a></li>
-                    <li><a href="{{route("admin.categories.index") }}">Categories</a></li>
-                    <li><a href="{{route("admin.products.index") }}">Products</a></li>
-                    <li><a href="{{route("admin.clients.index") }}">Clients</a></li>
-                    <li><a href="{{route("admin.orders.index") }}">Orders</a></li>
-                    <li><a href="{{route("admin.cupoms.index") }}">Cupoms</a></li>
+                    @if(Auth::user())
+                        @if(Auth::user()->role == 'admin')
+                            <li><a href="{{route("admin.categories.index") }}">Categories</a></li>
+                            <li><a href="{{route("admin.products.index") }}">Products</a></li>
+                            <li><a href="{{route("admin.clients.index") }}">Clients</a></li>
+                            <li><a href="{{route("admin.orders.index") }}">Orders</a></li>
+                            <li><a href="{{route("admin.cupoms.index") }}">Cupoms</a></li>
+                        @elseif(Auth::user()->role == 'client')
+                            <li><a href="{{route("customer.order.index") }}">My Orders</a></li>
+                        @endif
+                    @endif
                 </ul>
             </div>
         </div>

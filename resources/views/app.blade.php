@@ -34,11 +34,18 @@
 			<div class="collapse navbar-collapse" id="navbar">
 				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/') }}">Home</a></li>
-					<li><a href="{{route("admin.categories.index") }}">Categories</a></li>
-					<li><a href="{{route("admin.products.index") }}">Products</a></li>
-					<li><a href="{{route("admin.clients.index") }}">Clients</a></li>
-					<li><a href="{{route("admin.orders.index") }}">Orders</a></li>
-                    <li><a href="{{route("admin.cupoms.index") }}">Cupoms</a></li>
+
+					@if(Auth::user())
+						@if(Auth::user()->role == 'admin')
+							<li><a href="{{route("admin.categories.index") }}">Categories</a></li>
+							<li><a href="{{route("admin.products.index") }}">Products</a></li>
+							<li><a href="{{route("admin.clients.index") }}">Clients</a></li>
+							<li><a href="{{route("admin.orders.index") }}">Orders</a></li>
+							<li><a href="{{route("admin.cupoms.index") }}">Cupoms</a></li>
+						@elseif(Auth::user()->role == 'client')
+							<li><a href="{{route("customer.order.index") }}">My Orders</a></li>
+						@endif
+					@endif
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
@@ -67,5 +74,7 @@
 	<!-- Scripts -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	@yield('post-script')
 </body>
 </html>

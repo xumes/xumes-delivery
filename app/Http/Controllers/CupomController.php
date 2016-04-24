@@ -2,7 +2,7 @@
 
 namespace CodeDelivery\Http\Controllers;
 
-use CodeDelivery\Http\Requests\AdminCategoryRequest;
+use CodeDelivery\Http\Requests\AdminCupomRequest;
 use CodeDelivery\Http\Requests;
 use CodeDelivery\Repositories\CupomRepository;
 
@@ -31,11 +31,10 @@ class CupomController extends Controller
     
     public function create()
     {
-
         return view('admin.cupoms.create');
     }
 
-    public function store(AdminCategoryRequest $request)
+    public function store(AdminCupomRequest $request)
     {
         $data = $request->all();
         $this->repository->create($data);
@@ -45,11 +44,11 @@ class CupomController extends Controller
 
     public function edit($id)
     {
-        $category=$this->repository->find($id);
+        $cupom=$this->repository->find($id);
         return view('admin.cupoms.edit', compact('cupom'));
     }
     
-    public function update(AdminCategoryRequest $request, $id)
+    public function update(AdminCupomRequest $request, $id)
     {
         $data = $request->all();
         $this->repository->update($data, $id);

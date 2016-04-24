@@ -3,17 +3,17 @@
 
 @section('content')
     <div class="container">
-        <h3>Edit category {{$category->name}}</h3>
+        <h3>Edit cupom {{$cupom->name}}</h3>
     <br>
 
         @include('errors._check')
 
-        {!! Form::model($category, ['route'=>['admin.categories.update', $category->id], 'class'=>'form']) !!}
+        {!! Form::model($cupom, ['route'=>['admin.cupoms.update', $cupom->id], 'class'=>'form']) !!}
 
-        @include('admin.categories._form')
+        @include('admin.cupoms._form')
 
         <div class="form-group">
-            {!! Form::submit('Update category', ['class'=>'btn btn-primary']) !!}
+            {!! Form::submit('Update cupom', ['class'=>'btn btn-primary']) !!}
         </div>
 
         {!! Form::close() !!}

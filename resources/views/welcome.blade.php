@@ -44,6 +44,7 @@
                     <li><a href="{{route("admin.products.index") }}">Products</a></li>
                     <li><a href="{{route("admin.clients.index") }}">Clients</a></li>
                     <li><a href="{{route("admin.orders.index") }}">Orders</a></li>
+                    <li><a href="{{route("admin.cupoms.index") }}">Cupoms</a></li>
                 </ul>
             </div>
         </div>

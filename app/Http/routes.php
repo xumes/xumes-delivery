@@ -62,10 +62,19 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth.checkrole'], function(){
         Route::post('update/{id}', ['as'=>'admin.clients.update', 'uses'=>'ClientController@update']);
     });
 
-    // Clients
+    // Orders
     Route::group(['prefix'=>'orders'], function(){
         Route::get('/', ['as'=> 'admin.orders.index', 'uses'=>'OrderController@index']);
         Route::get('/{id}', ['as'=> 'admin.orders.edit', 'uses'=>'OrderController@edit']);
         Route::post('update/{id}', ['as'=> 'admin.orders.update', 'uses'=>'OrderController@update']);
+    });
+
+    // Cupoms
+    Route::group(['prefix'=>'cupoms'], function(){
+        Route::get('/', ['as'=> 'admin.cupoms.index', 'uses'=>'CupomController@index']);
+        Route::get('create', ['as'=> 'admin.cupoms.create', 'uses'=>'CupomController@create']);
+        Route::get('/{id}', ['as'=> 'admin.cupoms.edit', 'uses'=>'CupomController@edit']);
+        Route::post('update/{id}', ['as'=> 'admin.cupoms.update', 'uses'=>'CupomController@update']);
+        Route::post('store', ['as'=> 'admin.cupoms.store', 'uses'=>'CupomController@store']);
     });
 });

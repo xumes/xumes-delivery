@@ -37,7 +37,7 @@
                         </td>
                         <td>
                             @if($order->deliveryman)
-                                $order->deliveryman->name
+                                {{$order->deliveryman->name}}
                             @else
                                 --
                             @endif

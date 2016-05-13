@@ -64,3 +64,11 @@ $factory->define(CodeDelivery\Entities\Cupom::class, function (Faker\Generator $
         'value'=>rand(50, 100)
     ];
 });
+
+$factory->define(CodeDelivery\Entities\OAuth::class, function (Faker\Generator $faker) {
+    return [
+        'id' => 'appid01',
+        'secret' => 'secret',
+        'name' => 'My mobile app'
+    ];
+});

@@ -32,6 +32,11 @@ Route::post('password/email', 'Auth\PasswordController@postEmail');
 Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 
+//OAuth2
+Route::post('oauth/access_token', function() {
+    return Response::json(Authorizer::issueAccessToken());
+});
+
 
 Route::group(['prefix'=>'admin', 'middleware'=>'auth.checkrole:admin'], function(){
 
@@ -87,3 +92,23 @@ Route::group(['prefix'=> 'customer', 'middleware' => 'auth.checkrole:client'], f
 });
 
 
+//API routes
+
+Route::group(['prefix'=>'api', 'middleware'=>'oauth', 'as' => 'api.'], function(){
+    Route::get('pedidos', function() {
+        return [
+            'id' =>1,
+            'client' => "Reginaldo",
+            'total' =>10
+        ];
+    });
+
+    Route::get('teste', function() {
+        return [
+            'id' =>1,
+            'status' => "OK",
+            'message' => "It works!"
+        ];
+    });
+
+});

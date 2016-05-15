@@ -63,6 +63,7 @@ class OrderServices
             $order = $this->orderRepository->create($data);
 
             foreach ($items as $item){
+
                 $item['price'] = $this->productRepository->find($item['product_id'])->price;
                 $order->items()->create($item);
                 $total += $item['price'] * $item['qtd'];

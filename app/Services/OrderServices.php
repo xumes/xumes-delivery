@@ -5,6 +5,7 @@ namespace CodeDelivery\Services;
 
 
 
+use CodeDelivery\Entities\Order;
 use CodeDelivery\Repositories\CupomRepository;
 use CodeDelivery\Repositories\OrderRepository;
 use CodeDelivery\Repositories\ProductRepository;
@@ -48,9 +49,15 @@ class OrderServices
         DB::beginTransaction();
         try {
             $data['status'] = 0;
+
+            if (isset($data['cupom_id'])){
+                unset($data['cupom_id']);
+
+            }
+
             if(isset($data['cupom_code'])){
                 $cupom = $this->cupomRepository->findByField('code', $data['cupom_code'])->first();
-                $data['cupomj_id'] = $cupom->id;
+                $data['cupom_id'] = $cupom->id;
                 $cupom->used = 1;
                 $cupom->save();
                 unset($data['cupom_code']);
@@ -63,7 +70,6 @@ class OrderServices
             $order = $this->orderRepository->create($data);
 
             foreach ($items as $item){
-
                 $item['price'] = $this->productRepository->find($item['product_id'])->price;
                 $order->items()->create($item);
                 $total += $item['price'] * $item['qtd'];
@@ -83,7 +89,17 @@ class OrderServices
             throw $e;
         }
 
+    }
 
+    public function updateStatus($id, $idDeliveryman, $status)
+    {
+        $order = $this->orderRepository->getByIdAndDeliveryman($id, $idDeliveryman);
+        if ($order instanceof Order){
+            $order->status = $status;
+            $order->save();
+            return $order;
+        }
+        return false;
     }
 
 }

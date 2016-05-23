@@ -14,6 +14,8 @@ use LucaDegasperi\OAuth2Server\Authorizer;
 
 class ClientCheckoutController extends Controller
 {
+    private $with = ['client', 'items', 'cupom', 'deliveryman'];
+
     /**
      * @var OrderRepository
      */
@@ -63,30 +65,38 @@ class ClientCheckoutController extends Controller
 
         $id = $this->authorizer->getResourceOwnerId();
         $clientId = $this->userRepository->find($id)->client->id;
-        $orders = $this->repository->with('items')->scopeQuery(function($query) use($clientId){
+        $orders = $this->repository
+            ->skipPresenter(false)
+            ->with($this->with)
+            ->scopeQuery(function($query) use($clientId){
           return $query->where('client_id', '=', $clientId);
         })->paginate();
 
         return $orders;
     }
 
-    public function store(Request $request)
+    public function store(Requests\CheckoutRequest $request)
     {
         $data = $request->all();
         $id = $this->authorizer->getResourceOwnerId();
         $clientId = $this->userRepository->find($id)->client->id;
         $data['client_id'] = $clientId;
         $order = $this->orderServices->create($data);
-        $orderToApi = $this->repository->with('items')->find($order->id);
 
-        return $orderToApi;
+        return $this->repository
+            ->skipPresenter(false)
+            ->with($this->with)
+            ->find($order->id);
     }
 
     public function show($id)
     {
-        $order = $this->repository->with(['client', 'items.product', 'cupom', 'deliveryman'])->find($id);
+        $order = $this->repository
+            ->skipPresenter(false)
+            ->with($this->with)
+            ->find($id);
 
         return $order;
-    }
+}
 
 }
